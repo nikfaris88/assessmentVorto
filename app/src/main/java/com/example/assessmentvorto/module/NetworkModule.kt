@@ -8,6 +8,7 @@ import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -42,13 +43,19 @@ class NetworkModule {
     @Singleton
     @VisibleForTesting
     fun provideOkHttpClient(): OkHttpClient {
+        val loggingInterceptor = HttpLoggingInterceptor()
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
         val builder = OkHttpClient.Builder()
             .followRedirects(true)
             .followSslRedirects(false)
             .addInterceptor { chain ->
                 val original = chain.request()
                 val builder = original.newBuilder()
-                val request = builder.build()
+                val header = builder.header(
+                    "Authorization",
+                    "Bearer " + "5E2j1eggecq-M4HHr3DY5pRPMtagGN3reLk3BQ4JcjzeBmv1p_mTEE8wA8SKK7AR4f7hAqvqwjM_LtURDHsjFcdXn09zKZ4rMZu9g3Gw1mN4XlkFuYBloi0CZz4rY3Yx"
+                )
+                val request = header.build()
                 chain.proceed(request)
             }
 
@@ -59,29 +66,4 @@ class NetworkModule {
         return builder.build()
 
     }
-//    companion object {
-//        private var retrofit: Retrofit? = null
-//        fun getApiClient(): Retrofit {
-//            val gson = GsonBuilder()
-//                .setLenient()
-//                .create()
-//
-//            val okHttpClient = OkHttpClient.Builder()
-//                .readTimeout(100, TimeUnit.SECONDS)
-//                .connectTimeout(100, TimeUnit.SECONDS)
-//                .build()
-//
-//            if (retrofit == null) {
-//                retrofit = Retrofit.Builder()
-//                    .baseUrl(BASEURL)
-//                    .client(okHttpClient)
-//                    .addConverterFactory(GsonConverterFactory.create(gson))
-//                    .build()
-//            }
-//
-//            return retrofit!!
-//        }
-//    }
-
-
 }

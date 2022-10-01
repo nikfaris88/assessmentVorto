@@ -7,6 +7,6 @@ import javax.inject.Inject
 
 class MainRepository @Inject constructor(private val apiService: ApiService) {
 
-    fun fetchMessages(latitude: String, longitude: String): Single<MessageResponse> =
+    fun getTransactionSearch(latitude: String, longitude: String): Single<MessageResponse> =
         apiService.transactionSearch(latitude, longitude)
 }

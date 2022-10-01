@@ -1,6 +1,5 @@
 package com.example.assessmentvorto.components
 
-import android.app.Application
 import com.example.assessmentvorto.AssessmentVortoApplication
 import com.example.assessmentvorto.module.*
 import dagger.BindsInstance
@@ -17,7 +16,7 @@ import javax.inject.Singleton
         NetworkModule::class,
         ViewModelModule::class,
         AppModule::class,
-        DomainModules::class
+        DomainModules::class,
     ]
 )
 interface AppComponent {
@@ -26,7 +25,7 @@ interface AppComponent {
     interface Builder {
 
         @BindsInstance
-        fun application(application: Application): Builder
+        fun application(application: AssessmentVortoApplication): Builder
 
         fun build(): AppComponent
     }

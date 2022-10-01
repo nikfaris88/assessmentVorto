@@ -1,5 +1,6 @@
 package com.example.assessmentvorto.ui
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,8 +13,20 @@ import com.example.assessmentvorto.model.Business
 
 
 class MainAdapter(
-    private val business: MutableList<Business>
 ) : RecyclerView.Adapter<BaseViewHolder>() {
+    var itemViewModels: List<Business> = emptyList()
+
+    class SearchListViewHolder(mBinding: ItemSearchListBinding) :
+        BaseViewHolder(mBinding.root) {
+        val name: TextView = mBinding.txtPlaceName
+        private val location: TextView = mBinding.txtLocation
+
+        override fun bind(item: Business) {
+            name.text = item.name
+            location.text = item.location.display_address[0] + "\n" + item.location.display_address[1]
+
+        }
+    }
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
@@ -26,26 +39,22 @@ class MainAdapter(
     }
 
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
-        val data = business[position]
+        val data = itemViewModels[position]
         holder.bind(data)
     }
 
-    override fun getItemCount(): Int = business.size
+    override fun getItemCount(): Int{
+        Log.d("Adapter SIZE", "${itemViewModels.size}")
+        return itemViewModels.size
+    }
 
+    fun updateItems(items: List<Business>?) {
+        itemViewModels = items ?: emptyList()
+        notifyDataSetChanged()
+    }
 }
 
 abstract class BaseViewHolder(mBinding: View) : RecyclerView.ViewHolder(mBinding) {
     abstract fun bind(item: Business)
 }
 
-class SearchListViewHolder(mBinding: ItemSearchListBinding) :
-    BaseViewHolder(mBinding.root) {
-    val name: TextView = mBinding.txtPlaceName
-    val location: TextView = mBinding.txtLocation
-
-    override fun bind(item: Business) {
-        name.text = item.name
-        location.text = item.location.displayAddress[0]
-
-    }
-}

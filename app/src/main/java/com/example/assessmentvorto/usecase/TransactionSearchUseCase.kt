@@ -11,7 +11,7 @@ class TransactionSearchUseCase(
     private val mainRepository: MainRepository
 ) : UseCase<LatLngSearchRequest, MessageResponse>(schedulerProvider) {
     override fun buildUseCaseObservable(params: LatLngSearchRequest?): Single<MessageResponse> {
-        return mainRepository.fetchMessages(params!!.latitude, params.longitude)
+        return mainRepository.getTransactionSearch(params!!.latitude, params.longitude)
     }
 
 }

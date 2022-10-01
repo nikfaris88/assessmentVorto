@@ -18,13 +18,13 @@ data class Business(
     @SerializedName("review_count")
     val review_count: Int,
     @SerializedName("categories")
-    val category: List<Category>,
+    val categories: List<Category>,
     @SerializedName("rating")
     val rating: Double,
     @SerializedName("coordinates")
     val coordinates: Coordinates,
-    @SerializedName("transaction")
-    val transaction: List<Transaction>,
+    @SerializedName("transactions")
+    val transactions: List<String>,
     @SerializedName("price")
     val price: String,
     @SerializedName("location")

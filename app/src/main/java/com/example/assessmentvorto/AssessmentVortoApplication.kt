@@ -2,6 +2,7 @@ package com.example.assessmentvorto
 
 import android.app.Application
 import androidx.lifecycle.LifecycleObserver
+import com.example.assessmentvorto.components.DaggerAppComponent
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector

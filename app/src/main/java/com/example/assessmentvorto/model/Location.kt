@@ -4,20 +4,20 @@ import com.google.gson.annotations.SerializedName
 
 data class Location(
     @SerializedName("address1")
-    val address1:String,
+    val address1: String? = null,
     @SerializedName("address2")
-    val address2:String,
+    val address2: String? = null,
     @SerializedName("address3")
-    val address3:String,
+    val address3: String? = null,
     @SerializedName("city")
-    val city:String,
+    val city: String,
     @SerializedName("zip_code")
-    val zipCode:String,
+    val zip_code: String,
     @SerializedName("country")
-    val country:String,
+    val country: String,
     @SerializedName("state")
-    val state:String,
+    val state: String,
     @SerializedName("display_address")
-    val displayAddress:List<String>,
+    val display_address: List<String>,
 
-)
+    )

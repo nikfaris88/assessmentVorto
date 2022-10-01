@@ -2,6 +2,7 @@ package com.example.assessmentvorto.ui
 
 import android.content.Context
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.assessmentvorto.model.Business
@@ -13,12 +14,12 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
-    context: Context,
     private val transactionSearchUseCase: TransactionSearchUseCase
 ) : ViewModel() {
 
-    val businessList: MutableList<Business> = mutableListOf()
-    var adapterModels = MutableLiveData<MutableList<Business>>()
+    val data: LiveData<List<Business>>
+        get() = _data
+    private val _data = MutableLiveData<List<Business>>(emptyList())
 
     fun requestTransaction(latitude: String, longitude: String) {
         val latLngSearchRequest = LatLngSearchRequest(latitude, longitude)
@@ -27,12 +28,11 @@ class MainViewModel @Inject constructor(
             .subscribeOn(Schedulers.io())
             .subscribeBy(
                 onSuccess = {
-                    Log.e("TAG", "CreatedAT: ${it}")
-                    businessList.addAll(it.business)
-                    adapterModels.postValue(businessList)
+                    Log.d("TAG", "CreatedAT: ${it}")
+                    _data.postValue(it.businesses)
                 },
                 onError = {
-                    Log.e("ERROR", "Exception: $it")
+                    Log.d("ERROR", "Exception: ${it}")
                 }
             )
 
