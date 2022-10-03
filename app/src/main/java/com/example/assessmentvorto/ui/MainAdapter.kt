@@ -14,6 +14,7 @@ import com.example.assessmentvorto.model.Business
 
 class MainAdapter(
 ) : RecyclerView.Adapter<BaseViewHolder>() {
+    var onItemClick: ((Business) -> Unit)? = null
     var itemViewModels: List<Business> = emptyList()
 
     class SearchListViewHolder(mBinding: ItemSearchListBinding) :
@@ -23,7 +24,8 @@ class MainAdapter(
 
         override fun bind(item: Business) {
             name.text = item.name
-            location.text = item.location.display_address[0] + "\n" + item.location.display_address[1]
+            location.text =
+                item.location.display_address[0] + "\n" + item.location.display_address[1]
 
         }
     }
@@ -41,9 +43,12 @@ class MainAdapter(
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
         val data = itemViewModels[position]
         holder.bind(data)
+        holder.itemView.setOnClickListener {
+            onItemClick?.invoke(data)
+        }
     }
 
-    override fun getItemCount(): Int{
+    override fun getItemCount(): Int {
         Log.d("Adapter SIZE", "${itemViewModels.size}")
         return itemViewModels.size
     }

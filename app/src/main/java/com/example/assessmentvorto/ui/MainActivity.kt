@@ -41,11 +41,15 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    fun setRecyclerView() {
+    private fun setRecyclerView() {
         viewModel.data.observe(this) {
             if (adapter == null) {
                 adapter = MainAdapter()
                 Log.d("TAG", "it: $it")
+                adapter!!.onItemClick = { business ->
+                    Log.d("TAG", business.name)
+
+                }
             }
             adapter!!.updateItems(viewModel.data.value)
             binding.rvListMessage.adapter = adapter
